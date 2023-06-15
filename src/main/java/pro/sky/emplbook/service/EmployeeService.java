@@ -6,6 +6,7 @@ import pro.sky.emplbook.exceptions.EmployeeNotFoundException;
 import pro.sky.emplbook.exceptions.EmployeeStorageIsFullException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,20 +15,23 @@ public class EmployeeService {
     private final Integer MAX_EMP_AMOUNT = 10;
     private List<Employee> employees = new ArrayList<>();
 
-    public void addEmployee(String name, String surname) {
+    public Employee addEmployee(String name, String surname) {
+        Employee employee = new Employee(name,surname);
         if (employees.size() >= MAX_EMP_AMOUNT ) {
             throw new EmployeeStorageIsFullException("Превышен лимит сотрудников");
-        } else if (findOptionalEmployee(name,surname).isPresent()) {
+        } else if (employees.contains(employee)) {
             throw new EmployeeAlreadyAddedException("Такой сотрудник уже есть");
         } else {
-            employees.add(new Employee(name,surname));
-    }
+            employees.add(employee);
+            return employee;
+        }
     }
 
-    public void delEmployee(String name, String surname) {
-        Optional<Employee> optional = findOptionalEmployee(name, surname);
-        if (optional.isPresent()) {
-            employees.removeIf(employee -> employee.getName().equals(name) && employee.getSurname().equals(surname));
+    public Employee delEmployee(String name, String surname) {
+        Employee employee = new Employee(name,surname);
+        if (employees.contains(employee)) {
+            employees.remove(employee);
+            return employee;
         } else {
             throw new EmployeeNotFoundException("Нет такого сотрудника");
         }
@@ -54,7 +58,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployees() {
-        return employees;
+        return Collections.unmodifiableList(employees);
     }
 
 }
