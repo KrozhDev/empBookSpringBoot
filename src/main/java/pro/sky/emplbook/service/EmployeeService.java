@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import pro.sky.emplbook.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.emplbook.exceptions.EmployeeNotFoundException;
 import pro.sky.emplbook.exceptions.EmployeeStorageIsFullException;
-import pro.sky.emplbook.service.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,6 @@ public class EmployeeService {
             throw new EmployeeNotFoundException("Нет такого сотрудника");
         }
     }
-
 
     private Optional<Employee> findOptionalEmployee(String name, String surname) {
         Optional<Employee> optional = employees

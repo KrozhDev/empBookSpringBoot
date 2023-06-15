@@ -42,7 +42,6 @@ public class EmployeeController {
         } catch (EmployeeNotFoundException e1) {
             return "Такого сотрудника нет";
         }
-
         return makeJsonFormat(name, surname).toJSONString();
     }
 
@@ -66,7 +65,6 @@ public class EmployeeController {
                 .forEach(jsonArray::add);
         return jsonArray.toJSONString();
     }
-
 
         private static JSONObject makeJsonFormat(String name, String surname) {
             JSONObject jsonpObject = new JSONObject();
