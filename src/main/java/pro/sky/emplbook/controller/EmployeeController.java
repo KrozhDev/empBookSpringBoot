@@ -1,12 +1,10 @@
 package pro.sky.emplbook.controller;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.sky.emplbook.exceptions.EmployeeNotFoundException;
-import pro.sky.emplbook.service.Employee;
+import pro.sky.emplbook.service.employee.Employee;
 import pro.sky.emplbook.service.EmployeeService;
 
 import java.util.List;
