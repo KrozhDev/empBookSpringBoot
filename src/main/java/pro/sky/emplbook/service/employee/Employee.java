@@ -14,9 +14,32 @@ public class Employee {
 
     private static int idCounter = 0;
 
+    public String getFathername() {
+        return fathername;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public static int getIdCounter() {
+        return idCounter;
+    }
+
     public Employee(String name, String surname) {
         this.name = name;
         this.surname = surname;
+    }
+
+    public Employee(String name, String surname, Department department, Integer salary) {
+        this.name = name;
+        this.surname = surname;
+        this.department = department;
+        this.salary = salary;
     }
 
     public Employee(String name, String surname, String fathername, Integer salary, Department department) {
