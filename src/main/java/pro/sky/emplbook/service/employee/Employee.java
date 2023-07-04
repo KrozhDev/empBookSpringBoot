@@ -2,6 +2,8 @@ package pro.sky.emplbook.service.employee;
 
 import java.util.Objects;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 public class Employee {
     private String name;
     private String surname;
@@ -36,8 +38,8 @@ public class Employee {
     }
 
     public Employee(String name, String surname, Department department, Integer salary) {
-        this.name = name;
-        this.surname = surname;
+        this.name = capitalize(name.toLowerCase());
+        this.surname = capitalize(surname.toLowerCase());
         this.department = department;
         this.salary = salary;
     }

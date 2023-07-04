@@ -1,14 +1,22 @@
 package pro.sky.emplbook.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.emplbook.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.emplbook.exceptions.EmployeeNotFoundException;
 import pro.sky.emplbook.exceptions.EmployeeStorageIsFullException;
+import pro.sky.emplbook.exceptions.InvalidInputException;
 import pro.sky.emplbook.service.employee.Department;
 import pro.sky.emplbook.service.employee.Employee;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.*;
+
 
 @Service
 public class EmployeeService {
@@ -16,6 +24,10 @@ public class EmployeeService {
     private Map<String, Employee> employees = new HashMap<>();
 
     public Employee addEmployee(String name, String surname, Department department, Integer salary) {
+
+        validateInput(name, surname);
+
+
         Employee employee = new Employee(name, surname, department, salary);
         String key = name + " " + surname;
         if (employees.size() >= MAX_EMP_AMOUNT) {
@@ -26,10 +38,16 @@ public class EmployeeService {
             employees.put(key, employee);
             return employee;
         }
+
     }
 
     public Employee delEmployee(String name, String surname) {
+
+        validateInput(name, surname);
+
         String key = name + " " + surname;
+
+
         if (employees.keySet().contains(key)) {
             employees.remove(key);
             return new Employee(name, surname);
@@ -39,40 +57,20 @@ public class EmployeeService {
     }
 
     public Employee findEmployee(String name, String surname) {
-        if (employees.containsKey(name + " " + surname)) {
-            return employees.get(name + " " + surname);
+
+        validateInput(name, surname);
+
+
+        String key = name + " " + surname;
+
+
+        if (employees.containsKey(key)) {
+            return employees.get(key);
         } else {
             throw new EmployeeNotFoundException("Нет такого сотрудника");
         }
     }
 
-//    public Employee minSalaryEmployee() {
-//        int minSalary = Integer.MAX_VALUE;
-//        Employee employeeWithMinSalary = null;
-//        for (Employee emp: employees) {
-//            if (emp != null) {
-//                if (emp.getSalary() < minSalary) {
-//                    minSalary = emp.getSalary();
-//                    employeeWithMinSalary = emp;
-//                }
-//            }
-//        }
-//        return employeeWithMinSalary;
-//    }
-//
-//    public Employee maxSalaryEmployee() {
-//        int maxSalary = 0;
-//        Employee employeeWithMaxSalary = null;
-//        for (Employee emp: employees) {
-//            if (emp != null) {
-//                if (emp.getSalary() > maxSalary) {
-//                    maxSalary = emp.getSalary();
-//                    employeeWithMaxSalary = emp;
-//                }
-//            }
-//        }
-//        return employeeWithMaxSalary;
-//    }
 
     public Employee minSalaryDepartment(Department department) {
         Employee employee = employees.values().stream()
@@ -99,6 +97,12 @@ public class EmployeeService {
 
     public List<Employee> getEmployees() {
         return employees.values().stream().toList();
+    }
+
+    private void validateInput(String name, String surname) {
+        if (!(isAlpha(name) && isAlpha(surname))) {
+            throw new InvalidInputException("Имена и фамилии сотрудников могут содержать только буквы");
+        }
     }
 
 }
