@@ -1,11 +1,11 @@
-package pro.sky.emplbook.controller;
+package pro.sky.emplbook.controllers;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.sky.emplbook.service.employee.Department;
-import pro.sky.emplbook.service.employee.Employee;
+import pro.sky.emplbook.model.Department;
+import pro.sky.emplbook.model.Employee;
 import pro.sky.emplbook.service.EmployeeService;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/remove")
-    public Employee remove(@RequestParam("name") String name,
+    public String remove(@RequestParam("name") String name,
                       @RequestParam("surname") String surname) {
         return employeeService.delEmployee(name,surname);
     }
@@ -39,10 +39,9 @@ public class EmployeeController {
         return employeeService.findEmployee(name,surname);
     }
 
-
     @GetMapping("/print")
     public List<Employee> printEmployees() {
-        return employeeService.getEmployees();
+        return employeeService.getAllEmployees();
     }
 
 

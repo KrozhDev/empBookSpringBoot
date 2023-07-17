@@ -1,4 +1,4 @@
-package pro.sky.emplbook.service.employee;
+package pro.sky.emplbook.model;
 
 import java.util.Objects;
 
@@ -58,6 +58,10 @@ public class Employee {
 
     public String getSurname() {
         return surname;
+    }
+
+    public String getFullName() {
+        return name + " " + surname;
     }
 
     @Override
